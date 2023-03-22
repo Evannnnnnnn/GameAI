@@ -126,7 +126,7 @@ class GameState:
         # Resolve multi-agent effects
         GhostRules.checkDeath(state, agentIndex)
 
-        # Book keeping
+        # Bookkeeping
         state.data._agentMoved = agentIndex
         state.data.score += state.data.scoreChange
         GameState.explored.add(self)
