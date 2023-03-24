@@ -69,13 +69,26 @@ class ReflexAgent(Agent):
         """
         # Useful information you can extract from a GameState (pacman.py)
         successorGameState = currentGameState.generatePacmanSuccessor(action)
-        newPos = successorGameState.getPacmanPosition()
-        newFood = successorGameState.getFood()
         newGhostStates = successorGameState.getGhostStates()
+
+        # The new position of the pacman
+        newPos = successorGameState.getPacmanPosition()
+
+        # Sum of the manhattan distance from the pacman to all ghosts
+        newPosses = [manhattanDistance(newPos, ghostPosition)
+                     for ghostPosition in successorGameState.getGhostPositions()]
+
+        # Is there food on the new Position
+        newFood = 1 if successorGameState.getFood()[newPos[0]][newPos[1]] else 0
+
+        # Sum of the remaining scared times for the ghosts
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
         "*** YOUR CODE HERE ***"
-        return successorGameState.getScore()
+        # Sum all the previous evaluations up
+        score = successorGameState.getScore() + newFood + sum(newScaredTimes) + sum(newPosses)
+
+        return score
 
 def scoreEvaluationFunction(currentGameState: GameState):
     """
@@ -130,10 +143,10 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns the total number of agents in the game
 
         gameState.isWin():
-        Returns whether or not the game state is a winning state
+        Returns whether the game state is a winning state
 
         gameState.isLose():
-        Returns whether or not the game state is a losing state
+        Returns whether the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
         util.raiseNotDefined()
