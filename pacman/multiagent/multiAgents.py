@@ -75,18 +75,30 @@ class ReflexAgent(Agent):
         newPos = successorGameState.getPacmanPosition()
 
         # Sum of the manhattan distance from the pacman to all ghosts
-        newPosses = [manhattanDistance(newPos, ghostPosition)
+        ghostDistances = [manhattanDistance(newPos, ghostPosition)
                      for ghostPosition in successorGameState.getGhostPositions()]
+        minGhostDistance = min(ghostDistances)
 
         # Is there food on the new Position
-        newFood = 1 if successorGameState.getFood()[newPos[0]][newPos[1]] else 0
+        newFood = 10 if successorGameState.getFood()[newPos[0]][newPos[1]] else 0
 
         # Sum of the remaining scared times for the ghosts
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
+        # If all ghosts are scared, then pacman don't have to worry about them so in this case the minGhostDistance
+        # does not matter anymore
+        allScared = True
+      
+        for scaredTime in newScaredTimes:
+            if scaredTime <= 0:
+                allScared = False
+
+        if allScared:
+            minGhostDistance = 0
+          
         "*** YOUR CODE HERE ***"
         # Sum all the previous evaluations up
-        score = successorGameState.getScore() + newFood + sum(newScaredTimes) + sum(newPosses)
+        score = successorGameState.getScore() + newFood + sum(newScaredTimes) + minGhostDistance
 
         return score
 
