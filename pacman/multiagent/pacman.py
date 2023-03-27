@@ -672,8 +672,8 @@ def replayGame(layout, actions, display):
 
 
 def runGames(layout, pacman, ghosts, display, record, numGames=1, numTraining=0, catchExceptions=False, timeout=30):
-    import __main__
-    __main__.__dict__['_display'] = display
+    # import __main__
+    # __main__.__dict__['_display'] = display
 
     rules = ClassicGameRules(timeout)
     games = []
