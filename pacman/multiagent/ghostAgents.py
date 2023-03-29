@@ -12,7 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-from pacmanGame import Agent
+from tools.agent import Agent
 from pacmanGame import Actions
 from pacmanGame import Directions
 from tools.util import manhattanDistance
@@ -32,12 +32,12 @@ class GhostAgent(Agent):
             return util.chooseFromDistribution(dist)
 
     def getDistribution(self, state):
-        "Returns a Counter encoding a distribution over actions from the provided state."
+        """Returns a Counter encoding a distribution over actions from the provided state."""
         return util.Counter()
 
 
 class RandomGhost(GhostAgent):
-    "A ghost that chooses a legal action uniformly at random."
+    """A ghost that chooses a legal action uniformly at random."""
 
     def getDistribution(self, state):
         dist = util.Counter()
@@ -48,7 +48,7 @@ class RandomGhost(GhostAgent):
 
 
 class DirectionalGhost(GhostAgent):
-    "A ghost that prefers to rush Pacman, or flee when scared."
+    """A ghost that prefers to rush Pacman, or flee when scared."""
 
     def __init__(self, index, prob_attack=0.8, prob_scaredFlee=0.8):
         super().__init__(index)

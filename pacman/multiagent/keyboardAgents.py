@@ -12,7 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-from pacmanGame import Agent
+from tools.agent import Agent
 from pacmanGame import Directions
 import random
 
@@ -30,6 +30,7 @@ class KeyboardAgent(Agent):
 
     def __init__(self, index=0):
 
+        super().__init__()
         self.lastMove = Directions.STOP
         self.index = index
         self.keys = []
