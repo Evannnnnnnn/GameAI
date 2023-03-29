@@ -16,7 +16,7 @@ from tools.util import manhattanDistance
 import random
 from tools import util
 
-from pacmanGame import Agent
+from tools.agent import Agent
 from pacman import GameState
 
 class ReflexAgent(Agent):

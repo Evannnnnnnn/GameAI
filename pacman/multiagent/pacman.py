@@ -39,6 +39,7 @@ code to run a game.  This file is divided into three sections:
 To play your first game, type 'python pacman.py' from the command line.
 The keys are 'a', 's', 'd', and 'w' to move (or arrow keys).  Have fun!
 """
+import sys
 from pacmanGame import GameStateData
 from pacmanGame import Game
 from pacmanGame import Directions
@@ -46,9 +47,9 @@ from pacmanGame import Actions
 from tools.util import nearestPoint
 from tools.util import manhattanDistance
 import layout
-import sys
 import random
 import os
+
 
 ###################################################
 # YOUR INTERFACE TO THE PACMAN WORLD: A GameState #
@@ -81,13 +82,14 @@ class GameState:
         tmp = GameState.explored.copy()
         GameState.explored = set()
         return tmp
+
     getAndResetExplored = staticmethod(getAndResetExplored)
 
     def getLegalActions(self, agentIndex=0):
         """
         Returns the legal actions for the agent specified.
         """
-#        GameState.explored.add(self)
+        #        GameState.explored.add(self)
         if self.isWin() or self.isLose():
             return []
 
@@ -111,7 +113,7 @@ class GameState:
         if agentIndex == 0:  # Pacman is moving
             state.data._eaten = [False for i in range(state.getNumAgents())]
             PacmanRules.applyAction(state, action)
-        else:                # A ghost is moving
+        else:  # A ghost is moving
             GhostRules.applyAction(state, action, agentIndex)
 
         # Time passes
@@ -259,6 +261,7 @@ class GameState:
         """
         self.data.initialize(layout, numGhostAgents)
 
+
 ############################################################################
 #                     THE HIDDEN SECRETS OF PACMAN                         #
 #                                                                          #
@@ -266,7 +269,7 @@ class GameState:
 ############################################################################
 
 
-SCARED_TIME = 40    # Moves ghosts are scared
+SCARED_TIME = 40  # Moves ghosts are scared
 COLLISION_TOLERANCE = 0.7  # How close ghosts must be to Pacman to kill
 TIME_PENALTY = 1  # Number of points lost each round
 
@@ -346,6 +349,7 @@ class PacmanRules:
         Returns a list of possible actions.
         """
         return Actions.getPossibleActions(state.getPacmanState().configuration, state.data.layout.walls)
+
     getLegalActions = staticmethod(getLegalActions)
 
     def applyAction(state, action):
@@ -369,6 +373,7 @@ class PacmanRules:
         if manhattanDistance(nearest, next) <= 0.5:
             # Remove food
             PacmanRules.consume(nearest, state)
+
     applyAction = staticmethod(applyAction)
 
     def consume(position, state):
@@ -385,12 +390,13 @@ class PacmanRules:
                 state.data.scoreChange += 500
                 state.data._win = True
         # Eat capsule
-        if(position in state.getCapsules()):
+        if (position in state.getCapsules()):
             state.data.capsules.remove(position)
             state.data._capsuleEaten = position
             # Reset all ghosts' scared timers
             for index in range(1, len(state.data.agentStates)):
                 state.data.agentStates[index].scaredTimer = SCARED_TIME
+
     consume = staticmethod(consume)
 
 
@@ -414,6 +420,7 @@ class GhostRules:
         if reverse in possibleActions and len(possibleActions) > 1:
             possibleActions.remove(reverse)
         return possibleActions
+
     getLegalActions = staticmethod(getLegalActions)
 
     def applyAction(state, action, ghostIndex):
@@ -429,6 +436,7 @@ class GhostRules:
         vector = Actions.directionToVector(action, speed)
         ghostState.configuration = ghostState.configuration.generateSuccessor(
             vector)
+
     applyAction = staticmethod(applyAction)
 
     def decrementTimer(ghostState):
@@ -437,6 +445,7 @@ class GhostRules:
             ghostState.configuration.pos = nearestPoint(
                 ghostState.configuration.pos)
         ghostState.scaredTimer = max(0, timer - 1)
+
     decrementTimer = staticmethod(decrementTimer)
 
     def checkDeath(state, agentIndex):
@@ -452,6 +461,7 @@ class GhostRules:
             ghostPosition = ghostState.configuration.getPosition()
             if GhostRules.canKill(pacmanPosition, ghostPosition):
                 GhostRules.collide(state, ghostState, agentIndex)
+
     checkDeath = staticmethod(checkDeath)
 
     def collide(state, ghostState, agentIndex):
@@ -465,15 +475,19 @@ class GhostRules:
             if not state.data._win:
                 state.data.scoreChange -= 500
                 state.data._lose = True
+
     collide = staticmethod(collide)
 
     def canKill(pacmanPosition, ghostPosition):
         return manhattanDistance(ghostPosition, pacmanPosition) <= COLLISION_TOLERANCE
+
     canKill = staticmethod(canKill)
 
     def placeGhost(state, ghostState):
         ghostState.configuration = ghostState.start
+
     placeGhost = staticmethod(placeGhost)
+
 
 #############################
 # FRAMEWORK TO START A GAME #
@@ -568,7 +582,7 @@ def readCommand(argv):
 
     # Choose a Pacman agent
     noKeyboard = options.gameToReplay == None and (
-        options.textGraphics or options.quietGraphics)
+            options.textGraphics or options.quietGraphics)
     pacmanType = loadAgent(options.pacman, noKeyboard)
     agentOpts = parseAgentArgs(options.agentArgs)
     if options.numTraining > 0:
@@ -585,7 +599,7 @@ def readCommand(argv):
 
     # Choose a ghost agent
     ghostType = loadAgent(options.ghost, noKeyboard)
-    args['ghosts'] = [ghostType(i+1) for i in range(options.numGhosts)]
+    args['ghosts'] = [ghostType(i + 1) for i in range(options.numGhosts)]
 
     # Choose a display format
     if options.quietGraphics:
@@ -652,13 +666,13 @@ def replayGame(layout, actions, display):
     import pacmanAgents
     import ghostAgents
     rules = ClassicGameRules()
-    agents = [pacmanAgents.GreedyAgent()] + [ghostAgents.RandomGhost(i+1) for i in range(layout.getNumGhosts())]
+    agents = [pacmanAgents.GreedyAgent()] + [ghostAgents.RandomGhost(i + 1) for i in range(layout.getNumGhosts())]
     game = rules.newGame(layout, agents[0], agents[1:], display)
     state = game.state
     display.initialize(state.data)
 
     for action in actions:
-            # Execute the action
+        # Execute the action
         state = state.generateSuccessor(*action)
         # Change the display
         display.update(state.data)
@@ -678,7 +692,7 @@ def runGames(layout, pacman, ghosts, display, record, numGames=1, numTraining=0,
     for i in range(numGames):
         beQuiet = i < numTraining
         if beQuiet:
-                # Suppress output and graphics
+            # Suppress output and graphics
             import textDisplay
             gameDisplay = textDisplay.NullGraphics()
             rules.quiet = True
@@ -695,13 +709,13 @@ def runGames(layout, pacman, ghosts, display, record, numGames=1, numTraining=0,
             import time
             import pickle
             fname = ('recorded-game-%d' % (i + 1)) + \
-                '-'.join([str(t) for t in time.localtime()[1:6]])
+                    '-'.join([str(t) for t in time.localtime()[1:6]])
             f = open(fname, 'w')
             components = {'layout': layout, 'actions': game.moveHistory}
             pickle.dump(components, f)
             f.close()
 
-    if (numGames-numTraining) > 0:
+    if (numGames - numTraining) > 0:
         scores = [game.state.getScore() for game in games]
         wins = [game.state.isWin() for game in games]
         winRate = wins.count(True) / float(len(wins))
