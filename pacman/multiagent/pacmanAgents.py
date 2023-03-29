@@ -13,10 +13,10 @@
 
 
 from pacman import Directions
-from game import Agent
+from pacmanGame import Agent
 import random
-import game
-import util
+import pacmanGame
+from tools import util
 
 
 class LeftTurnAgent(game.Agent):

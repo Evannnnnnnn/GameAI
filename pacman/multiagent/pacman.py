@@ -21,7 +21,7 @@ code to run a game.  This file is divided into three sections:
           read through all the code we wrote to make the game runs
           correctly.  This section contains the parts of the code
           that you will need to understand in order to complete the
-          project.  There is also some code in game.py that you should
+          project.  There is also some code in pacmanGame.py that you should
           understand.
 
   (ii)  The hidden secrets of pacman:
@@ -39,17 +39,14 @@ code to run a game.  This file is divided into three sections:
 To play your first game, type 'python pacman.py' from the command line.
 The keys are 'a', 's', 'd', and 'w' to move (or arrow keys).  Have fun!
 """
-from game import GameStateData
-from game import Game
-from game import Directions
-from game import Actions
-from util import nearestPoint
-from util import manhattanDistance
-import util
+from pacmanGame import GameStateData
+from pacmanGame import Game
+from pacmanGame import Directions
+from pacmanGame import Actions
+from tools.util import nearestPoint
+from tools.util import manhattanDistance
 import layout
 import sys
-import types
-import time
 import random
 import os
 
@@ -144,7 +141,7 @@ class GameState:
 
     def getPacmanState(self):
         """
-        Returns an AgentState object for pacman (in game.py)
+        Returns an AgentState object for pacman (in pacmanGame.py)
 
         state.pos gives the current position
         state.direction gives the travel vector

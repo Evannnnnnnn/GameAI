@@ -12,8 +12,8 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-from game import Agent
-from game import Directions
+from pacmanGame import Agent
+from pacmanGame import Directions
 import random
 
 

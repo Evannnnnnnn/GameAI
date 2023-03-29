@@ -12,16 +12,16 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-from game import Agent
-from game import Actions
-from game import Directions
-import random
-from util import manhattanDistance
-import util
+from pacmanGame import Agent
+from pacmanGame import Actions
+from pacmanGame import Directions
+from tools.util import manhattanDistance
+from tools import util
 
 
 class GhostAgent(Agent):
     def __init__(self, index):
+        super().__init__()
         self.index = index
 
     def getAction(self, state):
@@ -33,7 +33,7 @@ class GhostAgent(Agent):
 
     def getDistribution(self, state):
         "Returns a Counter encoding a distribution over actions from the provided state."
-        util.raiseNotDefined()
+        return util.Counter()
 
 
 class RandomGhost(GhostAgent):
@@ -51,7 +51,7 @@ class DirectionalGhost(GhostAgent):
     "A ghost that prefers to rush Pacman, or flee when scared."
 
     def __init__(self, index, prob_attack=0.8, prob_scaredFlee=0.8):
-        self.index = index
+        super().__init__(index)
         self.prob_attack = prob_attack
         self.prob_scaredFlee = prob_scaredFlee
 

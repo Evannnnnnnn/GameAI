@@ -1,4 +1,4 @@
-# game.py
+# pacmanGame.py
 # -------
 # Licensing Information:  You are free to use or extend these projects for
 # educational purposes provided that (1) you do not distribute or publish
@@ -12,7 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-# game.py
+# pacmanGame.py
 # -------
 # Licensing Information: Please do not distribute or publish solutions to this
 # project. You are free to use and extend these projects for educational
@@ -20,9 +20,8 @@
 # John DeNero (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
 # For more info, see http://inst.eecs.berkeley.edu/~cs188/sp09/pacman.html
 
-from util import *
+from tools.util import *
 import time
-import os
 import traceback
 import sys
 
@@ -39,8 +38,8 @@ class Agent:
     def registerInitialState(self, state): # inspects the starting state
     """
 
-    def __init__(self, index=0):
-        self.index = index
+    def __init__(self):
+        pass
 
     def getAction(self, state):
         """
@@ -587,7 +586,6 @@ class Game:
         if not self.muteAgents:
             return
         global OLD_STDOUT, OLD_STDERR
-        import io
         OLD_STDOUT = sys.stdout
         OLD_STDERR = sys.stderr
         sys.stdout = self.agentOutput[agentIndex]

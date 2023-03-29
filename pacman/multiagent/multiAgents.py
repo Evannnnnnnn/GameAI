@@ -12,11 +12,11 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-from util import manhattanDistance
-from game import Directions
-import random, util
+from tools.util import manhattanDistance
+import random
+from tools import util
 
-from game import Agent
+from pacmanGame import Agent
 from pacman import GameState
 
 class ReflexAgent(Agent):
@@ -123,7 +123,7 @@ class MultiAgentSearchAgent(Agent):
     remove anything, however.
 
     Note: this is an abstract class: one that should not be instantiated.  It's
-    only partially specified, and designed to be extended.  Agent (game.py)
+    only partially specified, and designed to be extended.  Agent (pacmanGame.py)
     is another abstract class.
     """
 

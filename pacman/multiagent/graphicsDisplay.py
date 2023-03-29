@@ -15,7 +15,7 @@
 from graphicsUtils import *
 import math
 import time
-from game import Directions
+from pacmanGame import Directions
 
 ###########################
 #  GRAPHICS DISPLAY CODE  #
