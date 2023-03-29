@@ -12,7 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-from graphicsUtils import *
+from tools.graphicsUtils import *
 import math
 import time
 from pacmanGame import Directions

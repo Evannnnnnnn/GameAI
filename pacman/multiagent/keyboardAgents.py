@@ -36,8 +36,8 @@ class KeyboardAgent(Agent):
         self.keys = []
 
     def getAction(self, state):
-        from graphicsUtils import keys_waiting
-        from graphicsUtils import keys_pressed
+        from tools.graphicsUtils import keys_waiting
+        from tools.graphicsUtils import keys_pressed
         keys = keys_waiting() + keys_pressed()
         if keys != []:
             self.keys = keys
